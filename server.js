@@ -13,9 +13,9 @@ const app = express();
 
 
 //Middleware
-app.use(cors());                                                         // Habilito o CORS no meu projeto, pra possibilitar de qualquer front-end consumir as rotas dessa API
-app.use(bodyParser.json({ limit: '50mb' }));                             // Crio limitações básicas de recebimentos de dados, por ex, pra segurança da infraestrutura
-app.use(bodyParser.urlencoded({ extended: true }));       // Para dados enviados via URL encoded  (???)
+app.use(cors());                                                            // Habilito o CORS no meu projeto, pra possibilitar de qualquer front-end consumir as rotas dessa API
+app.use(bodyParser.json({ limit: '50mb' }));                                // Crio limitações básicas de recebimentos de dados, por ex, pra segurança da infraestrutura
+app.use(bodyParser.urlencoded({ extended: true }));                         // Para dados enviados via URL encoded  (???)
 // server.use(express.static('public'));
 
 
@@ -26,18 +26,17 @@ app.use(bodyParser.urlencoded({ extended: true }));       // Para dados enviados
 
 
 // Conexão com o MongoDB Atlas
-mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
+mongoose.connect(process.env.MONGO_URI)
 .then(() => console.log('Conectado ao MongoDB Atlas!'))
 .catch(err => console.error('Erro ao conectar ao MongoDB:', err));
 
 
 // Rotas
-const listasRoute = require('./routes/listasRoutes');
-app.use('/api/listasRoutes', listasRoute);                               // A rota que eu vou usar lá no meu APP.JS do front
+const listasRoute = require('./routes/listasRoutes');                       // Rotas de listas
+app.use('/api/listasRoutes', listasRoute);                                  // A rota que eu vou usar lá no meu APP.JS do front
 
+const usuarioRoutes = require('./routes/usuarioRoutes');                    // Rotas de usuário
+app.use('/api/usuarios', usuarioRoutes);
 
 // Porta. Iniciar servidor
 const PORT = process.env.PORT || 3000;                                      // Aqui eu subo o meu servidor
