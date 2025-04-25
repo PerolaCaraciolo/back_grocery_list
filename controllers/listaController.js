@@ -1,6 +1,7 @@
 // SEGUNDO QUE EU VOU MEXER
 
 const Lista = require('../models/listaModel');      // Importo o meu modelo
+const mongoose = require("mongoose");
 
 exports.getAllListas = async (req, res) => {        // BUSCA todas as Listas cadastradas no meu banco e trazer
     const { usuarioId } = req.query;
@@ -18,7 +19,7 @@ exports.getAllListas = async (req, res) => {        // BUSCA todas as Listas cad
 };
 
 exports.createLista = async (req, res) => {        // CADASTRA uma lista no banco
-    const { nomeLista, itens, favorita, localizacao } = req.body;         // Busca os dados (os atributos) que tão vindo do meu front, do corpo dele (não precisa colocar se o REQUIRED no MODEL foi FALSE)
+    const { nomeLista, itens, favorita, localizacao, usuarioId } = req.body;         // Busca os dados (os atributos) que tão vindo do meu front, do corpo dele (não precisa colocar se o REQUIRED no MODEL foi FALSE)
     const novaLista = new Lista ({                 // Instancio esse novo objeto
         nomeLista, 
         itens: itens.map(item => ({
@@ -28,7 +29,8 @@ exports.createLista = async (req, res) => {        // CADASTRA uma lista no banc
             total: (item.quantidade || 1) * (item.preco || 0)
         })),
         favorita: favorita || false,               // Se n for enviado, assumo false
-        localizacao: localizacao || null           // Se não houver, mantém como null
+        localizacao: localizacao || null,           // Se não houver, mantém como null
+        usuarioId: mongoose.Types.ObjectId(usuarioId)
     });
                                                                     // (???????????????)
     // Validação básica    (AVALIAR SE EU PRECISO MESMOOOOO, CONSIDERANDO QUE JÁ TÔ TRATANDO QUANDO RECEBO O DADO!)

@@ -20,7 +20,7 @@ const ListaSchema = new mongoose.Schema({                   // Crio o Schema de 
     },
     usuarioId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Usuario',
+        ref: 'usuarioModel',
         required: true
     }
 });
