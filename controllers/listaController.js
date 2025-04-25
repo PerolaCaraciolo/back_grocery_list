@@ -3,8 +3,14 @@
 const Lista = require('../models/listaModel');      // Importo o meu modelo
 
 exports.getAllListas = async (req, res) => {        // BUSCA todas as Listas cadastradas no meu banco e trazer
+    const { usuarioId } = req.query;
+
+    if (!usuarioId) {
+        return res.status(400).json({ mensagem: "Usuário não informado." });
+    }
+
     try {
-        const listas = await Lista.find();          // Busca aqui no ".find()"...
+        const listas = await Lista.find({ usuarioId });          // Busca aqui no ".find()"...
         res.json(listas);                           // ...e devolve aqui
     } catch (err) {                                 // Mas se der algum erro, entra aqui...
         res.status(500).json({ message: err.message});

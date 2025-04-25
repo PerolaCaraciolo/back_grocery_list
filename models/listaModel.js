@@ -17,6 +17,11 @@ const ListaSchema = new mongoose.Schema({                   // Crio o Schema de 
         latitude: { type: Number, required: false }, 
         longitude: { type: Number, required: false } 
         // user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }              // Relação com a minha outra tabela / com a outra entidades
+    },
+    usuarioId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Usuario',
+        required: true
     }
 });
 
